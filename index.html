@@ -1,103 +1,141 @@
 ---
-layout: default
 ---
 
-{% if site.layout_home_page == true %}
-{% if site.featured-post-slider == true %}
-<!-- featured post -->
-<section>
-  <div class="container-fluid p-sm-0">
-    <div class="row featured-post-slider">
-      {% for post in site.posts %}
-      {% if post.featured == true %}
-      <div class="col-lg-3 col-sm-6 mb-2 mb-lg-0 px-1">
-        <article class="card bg-dark text-center text-white border-0 rounded-0">
-          <img class="card-img rounded-0 img-fluid w-100" src="{{post.image | relative_url}}" alt="{{post.title}}">
-          <div class="card-img-overlay">
-            <div class="card-content">
-              {% if post %}
-                {% assign categories = post.categories %}
-              {% else %}
-              {% assign categories = page.categories %}
-              {% endif %}
-              {% for category in post.categories %}
-              <a class="d-block mb-3 text-white text-uppercase" href="{{ 'category/' | relative_url }}{{ category | slugify }}">{{ category }}</a>
-              {% endfor %}
-              <h4 class="card-title mb-4"><a class="text-white" href="{{ post.url | relative_url }}">{{post.title}}</a></h4>
-              <a class="btn btn-outline-light" href="{{ post.url | relative_url }}">read more</a>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ site.author.name }} - Portfolio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ '/assets/css/landing.css' | relative_url }}">
+</head>
+<body class="landing-page">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">{{ site.author.name }}</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#about">Acerca de</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#skills">Habilidades</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#projects">Proyectos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contacto</a></li>
+                    <li class="nav-item"><a class="nav-link btn-nav-cta" href="#contact">Empezar</a></li>
+                </ul>
             </div>
-          </div>
-        </article>
-      </div>
-      {% endif %}
-      {% endfor %}
-    </div>
-  </div>
-</section>
-<!-- /featured post -->
-{% endif %}
+        </div>
+    </nav>
 
-<!-- blog post -->
-<section class="section">
-  <div class="container">
-    <div class="row masonry-container">
-			{% if site.posts.size > 0 %}
-			{% for post in paginator.posts %}
-      <div class="col-lg-4 col-sm-6 mb-5">
-        <article class="text-center">
-					<img class="img-fluid mb-4" src="{{post.image | relative_url}}" alt="{{post.title}}">
-					{% if post %}
-						{% assign categories = post.categories %}
-					{% else %}
-					{% assign categories = page.categories %}
-					{% endif %}
-					{% for category in post.categories %}
-          <a class="d-block mb-3 text-dark text-uppercase" href="{{ 'category/' | relative_url }}{{ category | slugify }}">{{ category }}</a>
-          {% endfor %}
-          <h4 class="title-border"><a class="text-dark" href="{{ post.url | prepend: site.baseurl }}">{{post.title}}</a></h4>
-          <p>{{ post.content | strip_html | truncatewords: 35 }}</p>
-          <a href="{{ post.url | prepend: site.baseurl }}" class="btn btn-transparent">read more</a>
-        </article>
-      </div>
-			{% endfor %}
-			{% endif %}
-    </div>
-    {% include pagination.html %}
-  </div>
-</section>
-<!-- /blog post -->
+    <!-- Hero Section -->
+    <section class="hero-landing min-vh-100 d-flex align-items-center">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-lg-10 mx-auto">
+                    <!-- Subtitle Badge -->
+                    <div class="badge-tag mb-4">
+                        <span>Desarrollador • Designer • Creativo</span>
+                    </div>
 
-{% include instagram.html %}
+                    <!-- Main Title -->
+                    <h1 class="hero-title mb-4">
+                        El puente entre
+                        <span class="gradient-text">talento junior</span>
+                        y
+                        <span class="gradient-text-purple">empresas reales</span>
+                    </h1>
 
-{% else %}
+                    <!-- Subtitle -->
+                    <p class="hero-subtitle mb-5">
+                        Transformo ideas en soluciones digitales innovadoras.<br>
+                        Especializado en desarrollo web, diseño UX/UI y estrategia digital.
+                    </p>
 
-<!-- dividers -->
-<div class="dividers">
-  <div class="divider"></div>
-  <div class="divider"></div>
-  <div class="divider"></div>
-  <div class="divider"></div>
-</div>
+                    <!-- CTA Buttons -->
+                    <div class="d-flex gap-3 justify-content-center flex-wrap mb-5">
+                        <a href="#contact" class="btn btn-primary-cta">Comenzar gratis</a>
+                        <a href="#projects" class="btn btn-secondary-cta">Ver mi trabajo →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<!-- hero area -->
-<section class="hero-section">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-6 align-self-end">
-        <h1 class="mb-0">Welcome</h1>
-        <h2 class="mb-100 title-border-lg">to <i>{{site.author.name}} Blog</i></h2>
-        <p class="mb-80 mr-5">{{site.hero.hero-subtitle}}</p>
-        <span class="font-secondary text-dark mr-3 mr-sm-5">Follow</span>
-        <ul class="list-inline d-inline-block mb-5">
-          {% for social in site.social %}
-          <li class="list-inline-item mx-3"><a href="{{ social.link }}" class="text-dark"><i class="{{ social.icon }}"></i></a></li>
-          {% endfor %}
-        </ul>
-      </div>
-      <div class="col-lg-6 text-right">
-        <img class="img-fluid" src="{{site.hero.hero-banner | relative_url }}" alt="banner-image">
-      </div>
-    </div>
+    <!-- Stats Section -->
+    <section class="stats-section py-5">
+        <div class="container">
+            <div class="row text-center g-4">
+                <div class="col-md-3 col-sm-6">
+                    <div class="stat-card">
+                        <h3 class="stat-number">50+</h3>
+                        <p class="stat-label">Proyectos Completados</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="stat-card">
+                        <h3 class="stat-number">30+</h3>
+                        <p class="stat-label">Clientes Satisfechos</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="stat-card">
+                        <h3 class="stat-number">99%</h3>
+                        <p class="stat-label">Tasa de Satisfacción</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="stat-card">
+                        <h3 class="stat-number">8+</h3>
+                        <p class="stat-label">Años de Experiencia</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects-section py-5">
+        <div class="container">
+            <h2 class="section-title mb-5">Mis Proyectos</h2>
+            <div class="row g-4">
+                {% for post in site.posts limit:3 %}
+                <div class="col-md-4">
+                    <div class="project-card">
+                        <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" class="project-image">
+                        <div class="project-content">
+                            <h4>{{ post.title }}</h4>
+                            <p>{{ post.content | strip_html | truncatewords: 15 }}</p>
+                            <a href="{{ post.url | relative_url }}" class="btn-link">Leer más →</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer with Contact -->
+    <section id="contact" class="footer-section py-5">
+        <div class="container text-center">
+            <h2 class="mb-4">¿Listo para tu próximo proyecto?</h2>
+            <p class="mb-4">Contáctame y hagamos algo increíble juntos</p>
+            <div class="social-links">
+                {% for social in site.social %}
+                <a href="{{ social.link }}" class="social-icon" title="{{ social.title }}">
+                    <i class="{{ social.icon }}"></i>
+                </a>
+                {% endfor %}
+            </div>
+            <p class="copyright mt-5">© 2026 {{ site.author.name }}. Todos los derechos reservados.</p>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
   </div>
 </section>
 <!-- /hero area -->
